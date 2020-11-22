@@ -1,0 +1,96 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-petclinic-data-jdbc
+  namespace: default
+  labels:
+    app: spring-petclinic-data-jdbc
+spec:
+  replicas: 1
+  minReadySeconds: 60
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  selector: 
+    matchLabels:
+      app: spring-petclinic-data-jdbc    
+  template:
+    metadata:
+      labels:
+        app: spring-petclinic-data-jdbc
+    spec:
+      containers:
+      - name: spring-petclinic-data-jdbc
+        env:
+        - name: JAVA_OPTS
+          value: "-Xms 256m"
+        image: spring-petclinic-data-jdbc:latest
+        imagePullPolicy: Never
+        securityContext:
+          privileged: true
+          runAsUser: 1000
+          #allowPrivilegeEscalation: true
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        #lifecycle:
+        #  preStop:
+        #    exec:
+        #      command:
+        #      - sh
+        #      - -c
+        #      - sleep 30
+        livenessProbe:
+          httpGet:
+            path: /manage/health
+            port: 8080
+          initialDelaySeconds: 120
+          periodSeconds: 10
+          failureThreshold: 3
+          successThreshold: 1
+          timeoutSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /manage/health
+            port: 8080
+          initialDelaySeconds: 120
+          periodSeconds: 10
+          failureThreshold: 3
+          successThreshold: 1
+          timeoutSeconds: 3
+        resources:
+          limits:
+            cpu: 0.5
+            memory: 512M
+          requests:
+            cpu: 0.5
+            memory: 512M
+        volumeMounts:
+        - name: log-storage
+          mountPath: /logs
+      volumes:
+      - name: log-storage
+        hostPath:
+          path: /logs
+          type: "DirectoryOrCreate"
+      #serviceAccountName: default
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-petclinic-data-jdbc-service
+  namespace: default
+  labels:
+    app: spring-petclinic-data-jdbc
+spec:
+  selector:
+    app: spring-petclinic-data-jdbc
+  ports:
+  - name: tcp
+    port: 8080
+    targetPort: 8080
+  type: NodePort
