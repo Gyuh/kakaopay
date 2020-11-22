@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: spring-petclinic-data-jdbc-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  namespace: default
+  labels: 
+    app: spring-petclinic-data-jdbc
+spec:
+  rules:
+  - host: petclinic.com
+    http: 
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: spring-petclinic-data-jdbc-service
+            port: 
+              number: 8080
