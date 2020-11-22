@@ -1,6 +1,6 @@
 # kakaopay devops task
 ## 실행순서
-- ./gradlew bootJar
+- ./gradlew bootjar
 - docker build -t spring-petclinic-data-jdbc:1.0 .
 - kubectl apply -f /k8s/mysql-deployment.yml
 - kubectl apply -f /k8s/petclinic-deployment.yml
