@@ -10,7 +10,11 @@
 - gradle을 사용하여 어플리케이션과 도커이미지를 빌드한다.
   - gradle init 명령어를 통해 maven->gradle 빌드 script 파일 변경
   - build.gradle jib task를 통해 local repo로 docker build,push
-  - build.gradle bootjar task 추가하여 /target 경로에 jar파일 생성 가능 
+  ```
+  * 필요시 jar를 이용하여 dockerbuild
+  1. build.gradle bootjar task 추가하여 /target 경로에 jar파일 생성 
+  2. dock build -t spring-petclinic-data-jdbc:latest
+  ```
 - 어플리케이션의 log는 host의 /logs 디렉토리에 적재되도록 한다.
   - hostpath volumemount
 - 정상 동작 여부를 반환하는 api를 구현하며, 10초에 한번 체크하도록 한다. 3번 연속 체크에 실패하 면 어플리케이션은 restart 된다.
