@@ -11,7 +11,7 @@
   - gradle init 명령어를 통해 maven->gradle 빌드 script 파일 변경
   - build.gradle jib task를 통해 local repo로 docker build,push
   ```
-  * 필요시 jar를 이용하여 dockerbuild
+  필요시 jar를 이용하여 dockerbuild
   1. ./gradlew bootJar
   2. docker build -t spring-petclinic-data-jdbc:latest .
   ```
