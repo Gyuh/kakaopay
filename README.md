@@ -25,6 +25,7 @@
 - DB도 kubernetes에서 실행하며 재 실행 시에도 변경된 데이터는 유실되지 않도록 설정한다. 어플리케이션과 DB는 cluster domain을 이용하여 통신한다.
   - mysql pv,svc 설정 
 - nginx-ingress-controller를 통해 어플리케이션에 접속이 가능하다.
-  - nodePort 설정 추가
+  - host: petclinic.com
+  - nodeport service 설정 
 - namespace는 default를 사용한다.
   - namespace defualt 설정 추가
