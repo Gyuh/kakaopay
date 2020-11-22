@@ -3,6 +3,8 @@
 - ./gradlew jibDockerBuild
 - kubectl apply -f ./k8s/mysql-deployment.yml
 - kubectl apply -f ./k8s/petclinic-deployment.yml
+- kubectl apply -f ./k8s/petclinic-ingress.yml
+
 
 ## 요구사항 설명
 - gradle을 사용하여 어플리케이션과 도커이미지를 빌드한다.
