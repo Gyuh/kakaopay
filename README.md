@@ -16,7 +16,7 @@
   2. docker build -t spring-petclinic-data-jdbc:latest .
   ```
 - 어플리케이션의 log는 host의 /logs 디렉토리에 적재되도록 한다.
-  - hostpath volumemount
+  - hostpath volumemount 설정
 - 정상 동작 여부를 반환하는 api를 구현하며, 10초에 한번 체크하도록 한다. 3번 연속 체크에 실패하 면 어플리케이션은 restart 된다.
   - springboot acturator 사용 (basepath: /manage)
   - livenessProbe 설정 추가
